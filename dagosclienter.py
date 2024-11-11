@@ -42,6 +42,18 @@ def get_nickname(sample):
         outstring = match.group(1)
     return outstring
 
+def get_xsec(sample):
+    xsec = 1.0
+
+    with open("xsec_proc_18UL.json", "r") as file:
+        xsec_config = json.load(file)
+        cross_sections = xsec_config.get("xsec2018UL", {})
+
+        for dataset, xsec1 in cross_sections.items():
+            if dataset == sample:
+                xsec = xsec1
+
+    return xsec
 
 def get_sample_info(sample):
     command1 = 'dasgoclient -query="dataset dataset={} instance=prod/phys03" -json | grep "nfiles"'.format(sample)
@@ -67,6 +79,7 @@ def get_sample_info(sample):
     data['generator_weight'] = generator_weight
     data['sample_type'] = get_sample_type(sample)
     data['nick'] = get_nickname(sample)
+    data['xsec'] = get_xsec(sample)
 
     return data
 
