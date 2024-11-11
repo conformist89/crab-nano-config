@@ -76,6 +76,17 @@ with open('nanofiles.json', 'r') as file:
 # we need to parse the filelist
 filelist = data['filelist'+args.era+'UL']
 
+
+config_dict = {}
 for file in filelist:
-    print(get_sample_info(file))
-    print("\n")
+    short_nickname = get_nickname(file)
+    config_dict[short_nickname] = get_sample_info(file)
+
+
+# Write the dictionary to a JSON file
+with open("datasets.json", "w") as file:
+    json.dump(config_dict, file, indent=4)  # `indent=4` makes the file more readable
+    
+    
+# print(get_sample_info(file))
+# print("\n")
