@@ -27,8 +27,6 @@ def get_sample_type(sample):
         return 'other'
 
 def get_sample_info(sample):
-    pass
-    sample = '/SingleMuon/aakhmets-data_2018UL_singlemuon_SingleMuon_Run2018A_1729863731-00000000000000000000000000000000/USER'
     command1 = 'dasgoclient -query="dataset dataset={} instance=prod/phys03" -json | grep "nfiles"'.format(sample)
 
 
@@ -50,13 +48,11 @@ def get_sample_info(sample):
     data['dbs'] = dbs
     data['era'] = era
     data['generator_weight'] = generator_weight
-    data['type'] = get_sample_type(sample)
+    data['sample_type'] = get_sample_type(sample)
 
     json_config = json.dumps(data, indent=4)
 
     return json_config
-    # print("\nUpdated JSON String:")
-    # print(json_config)
 
 
 
