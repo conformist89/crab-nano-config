@@ -64,9 +64,7 @@ def get_sample_info(sample):
     data['sample_type'] = get_sample_type(sample)
     data['nick'] = get_nickname(sample)
 
-    json_config = json.dumps(data, indent=4)
-
-    return json_config
+    return data
 
 
 
@@ -88,5 +86,3 @@ with open("datasets.json", "w") as file:
     json.dump(config_dict, file, indent=4)  # `indent=4` makes the file more readable
     
     
-# print(get_sample_info(file))
-# print("\n")
