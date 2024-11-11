@@ -2,6 +2,7 @@ import json
 import os
 import subprocess
 import argparse
+import re
 
 parser = argparse.ArgumentParser("simple_example")
 parser.add_argument("--era", help="Data taking period, for now only Run 2 UL", type=str)
@@ -25,6 +26,18 @@ def get_sample_type(sample):
         return 'singletop'
     else:
         return 'other'
+    
+def get_nickname(sample):
+    outstring = 'other'
+    if 'SingleMuon' in sample:
+        match = re.search(r"_(SingleMuon_Run2018[A-Z])_", sample)
+        if match:
+            outstring = match.group(1)
+    else:
+        match = re.search(r"/([^/]+)/", sample)
+        outstring = match.group(1)
+    return outstring
+
 
 def get_sample_info(sample):
     command1 = 'dasgoclient -query="dataset dataset={} instance=prod/phys03" -json | grep "nfiles"'.format(sample)
@@ -49,6 +62,7 @@ def get_sample_info(sample):
     data['era'] = era
     data['generator_weight'] = generator_weight
     data['sample_type'] = get_sample_type(sample)
+    data['nick'] = get_nickname(sample)
 
     json_config = json.dumps(data, indent=4)
 
@@ -60,7 +74,7 @@ with open('nanofiles.json', 'r') as file:
     data = json.load(file)
 
 # we need to parse the filelist
-filelist = data['filelist']
+filelist = data['filelist'+args.era+'UL']
 
 for file in filelist:
     print(get_sample_info(file))
