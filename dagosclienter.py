@@ -3,11 +3,15 @@ import os
 import subprocess
 import argparse
 import re
+import time
 
 parser = argparse.ArgumentParser("simple_example")
 parser.add_argument("--era", help="Data taking period, for now only Run 2 UL", type=str)
 
 args = parser.parse_args()
+
+# Record the start time
+start_time = time.time()
 
 def get_sample_type(sample):
     if 'SingleMuon' in sample:
@@ -85,4 +89,9 @@ for file in filelist:
 with open("datasets.json", "w") as file:
     json.dump(config_dict, file, indent=4)  # `indent=4` makes the file more readable
     
-    
+# Record the end time
+end_time = time.time()
+
+# Calculate the elapsed time
+execution_time = (end_time - start_time) / 60
+print(f"Execution time: {execution_time:.4f} minutes")
