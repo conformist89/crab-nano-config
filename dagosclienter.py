@@ -24,7 +24,7 @@ def get_sample_type(sample):
         return 'wjets'
     elif 'QCD' in sample:
         return 'qcd'
-    elif 'WZTo2Q2L' in sample or 'WZTo3LNu' in sample or 'ZZTo2L2Nu' in sample or 'ZZTo2L2Q' in sample or 'ZZTo4L' in sample:
+    elif 'WZTo2Q2L' in sample or 'WZTo3LNu' in sample or 'ZZTo2L2Nu' in sample or 'ZZTo2Q2L' in sample or 'ZZTo4L' in sample:
         return 'diboson'
     elif 'ST' in sample:
         return 'singletop'
